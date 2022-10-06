@@ -19,6 +19,8 @@ function Tilter({ children }) {
     }
   }, []);
 
+  const isReady = (requiresPermission && granted) || !requiresPermission;
+
   return (
     <>
       {requiresPermission && (
@@ -30,7 +32,7 @@ function Tilter({ children }) {
       <p>Requires is {requiresPermission.toString()}</p>
       <p>Permission is {granted.toString()}</p>
 
-      {granted ? children : null}
+      {isReady ? children : null}
     </>
   );
 }

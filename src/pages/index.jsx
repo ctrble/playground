@@ -11,8 +11,6 @@ const DeviceOrientation = dynamic(
 // import ParallaxTilt from "src/components/ParallaxTilt";
 import Tilter from "src/components/Tilter";
 
-import styles from "../styles/Home.module.css";
-
 export default function Home() {
   return (
     <Tilter>
