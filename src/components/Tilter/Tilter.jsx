@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function Tilter() {
+function Tilter({ children }) {
   const [granted, setGranted] = useState(false);
   const [requiresPermission, setRequiresPermission] = useState(false);
 
@@ -26,8 +26,11 @@ function Tilter() {
           Request
         </button>
       )}
+
       <p>Requires is {requiresPermission.toString()}</p>
       <p>Permission is {granted.toString()}</p>
+
+      {granted ? children : null}
     </>
   );
 }
