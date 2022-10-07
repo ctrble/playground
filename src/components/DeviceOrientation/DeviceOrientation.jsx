@@ -78,6 +78,7 @@ function DeviceOrientation() {
   const yTiltPercent = (yTiltAngle / degreesMax) * 100;
 
   // recenter the angles
+  // might not need with deviceOrientation.absolute
   const xTiltOffset = Math.abs(
     constrainToRange(xTiltPercent + degreesMax / 2, -100, 100)
   );
