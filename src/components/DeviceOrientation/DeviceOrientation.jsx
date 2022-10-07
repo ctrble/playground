@@ -9,7 +9,13 @@ import { constrainToRange } from "./helpers";
 import styles from "./DeviceOrientation.module.scss";
 
 function DeviceOrientation() {
-  const [deviceOrientation, setDeviceOrientation] = useState();
+  const initialOrientation = {
+    alpha: 0,
+    beta: 0,
+    gamma: 0,
+  };
+  const [deviceOrientation, setDeviceOrientation] =
+    useState(initialOrientation);
   const onDeviceOrientation = useGlobalEvent("deviceorientation");
 
   const initialCoordinates = [0, 0];
@@ -54,24 +60,38 @@ function DeviceOrientation() {
     })
   );
 
+  // create a percentage based on window size for mouse movement
   const xMouse = (coordinates[0] / width) * 100;
   const yMouse = (coordinates[1] / height) * 100;
 
+  // set a max since we won't look at it upside down
   const degreesMax = 90;
-  // range: [-180, 180]
-  const xGyro = deviceOrientation?.gamma
-    ? (deviceOrientation?.gamma / degreesMax) * 100
-    : 0;
-  // range: [-90, 90]
-  const yGyro = deviceOrientation?.beta
-    ? (deviceOrientation?.beta / degreesMax) * 100
-    : 0;
+
+  // around x axis is beta: [-180, 180]
+  // around y axis is gamma: [-90, 90]
+  // remap x to y because of angle around vs angle towards
+  const xTiltAngle = deviceOrientation?.gamma;
+  const yTiltAngle = deviceOrientation?.beta;
+
+  // get percentage
+  const xTiltPercent = (xTiltAngle / degreesMax) * 100;
+  const yTiltPercent = (yTiltAngle / degreesMax) * 100;
+
+  // recenter the angles
+  const xTiltOffset = Math.abs(
+    constrainToRange(xTiltPercent + degreesMax / 2, -100, 100)
+  );
+  const yTiltOffset = Math.abs(
+    constrainToRange(yTiltPercent + degreesMax / 2, -100, 100)
+  );
+
+  // fallback to 0 if there's no data
+  const xTilt = xTiltAngle ? xTiltOffset : 0;
+  const yTilt = yTiltAngle ? yTiltOffset : 0;
 
   // offset the tilt by half to make the middle neutral
-  const xValue =
-    Math.abs(constrainToRange(xGyro + degreesMax / 2, -100, 100)) || xMouse;
-  const yValue =
-    Math.abs(constrainToRange(yGyro + degreesMax / 2, -100, 100)) || yMouse;
+  const xValue = xTilt || xMouse;
+  const yValue = yTilt || yMouse;
 
   return (
     <section
@@ -93,10 +113,10 @@ function DeviceOrientation() {
         <br />
         <code>{deviceOrientation?.rotationRate?.alpha}</code>
         <code>
-          {deviceOrientation?.rotationRate?.beta} / {xGyro}
+          {deviceOrientation?.rotationRate?.beta} / {xTilt}
         </code>
         <code>
-          {deviceOrientation?.rotationRate?.gamma} / {yGyro}
+          {deviceOrientation?.rotationRate?.gamma} / {yTilt}
         </code>
       </p>
 
