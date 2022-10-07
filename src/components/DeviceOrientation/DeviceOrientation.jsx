@@ -53,10 +53,8 @@ function DeviceOrientation() {
   const xMouse = coordinates[0] / width;
   const yMouse = coordinates[1] / height;
 
-  const xGyro = deviceOrientation?.beta ? Math.abs(deviceOrientation?.beta) : 0;
-  const yGyro = deviceOrientation?.gamma
-    ? Math.abs(deviceOrientation?.gamma)
-    : 0;
+  const xGyro = deviceOrientation?.beta ? deviceOrientation?.beta / 90 : 0;
+  const yGyro = deviceOrientation?.gamma ? deviceOrientation?.gamma / 90 : 0;
 
   const xValue = xGyro || xMouse;
   const yValue = yGyro || yMouse;
@@ -65,8 +63,8 @@ function DeviceOrientation() {
     <section
       className={styles.outer}
       style={{
-        "--coordinates-x": `${(xValue / width) * 100}%`,
-        "--coordinates-y": `${(yValue / height) * 100}%`,
+        "--coordinates-x": `${xValue * 100}%`,
+        "--coordinates-y": `${yValue * 100}%`,
         "--delta-x": `${(delta[0] / 360) * 100}deg`,
         "--delta-y": `${(delta[1] / 360) * 100}deg`,
         // "--delta-x": `${Math.abs(delta[0] / 360) * 100}deg`,
@@ -74,28 +72,29 @@ function DeviceOrientation() {
       }}
       ref={ref}
     >
-      {/* <div className={styles.inner} /> */}
+      <div className={styles.inner} />
 
       <p>
         Current orientation:
-        <code>{deviceOrientation?.alpha}</code>
-        <code>{deviceOrientation?.beta}</code>
+        <br />
+        <code>{deviceOrientation?.rotationRate?.alpha}</code>
         <code>
-          {deviceOrientation?.gamma} / {yGyro}
+          {deviceOrientation?.rotationRate?.beta} / {xGyro}
+        </code>
+        <code>
+          {deviceOrientation?.rotationRate?.gamma} / {yGyro}
         </code>
       </p>
 
       <p>
         Coordinates:
+        <br />
         <code>
           x {coordinates[0]} / y {coordinates[1]}
         </code>
-      </p>
-
-      <p>
-        Coordinates:
+        <br />
         <code>
-          x {xValue} / y {yValue}
+          xValue {xValue} / yValue {yValue}
         </code>
       </p>
     </section>
