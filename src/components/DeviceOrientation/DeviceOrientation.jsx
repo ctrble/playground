@@ -114,7 +114,7 @@ function DeviceOrientation() {
       <div className={styles.vertical} />
       <div className={styles.turn} />
 
-      <p>
+      {/* <p>
         Current orientation:
         <br />
         <code>alpha raw {deviceOrientation?.alpha}</code>
@@ -146,7 +146,7 @@ function DeviceOrientation() {
         <code>yValue {yValue}%</code>
         <br />
         <code>zValue {zValue}%</code>
-      </p>
+      </p> */}
     </section>
   );
 }

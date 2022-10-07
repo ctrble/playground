@@ -33,6 +33,7 @@
   text-align: center;
   color: black;
 
+  opacity: 1;
   @include cover();
 
   background-repeat: repeat;
@@ -43,7 +44,6 @@
 
 .vertical {
   opacity: 0.5;
-
   @include cover();
 
   background-repeat: repeat;
@@ -54,7 +54,6 @@
 
 .turn {
   opacity: 0.33;
-
   @include cover();
 
   background-repeat: repeat;
