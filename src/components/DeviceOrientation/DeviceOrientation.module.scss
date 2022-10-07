@@ -1,72 +1,66 @@
-.outer {
+@mixin cover() {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+@mixin pastel-gradient($direction) {
+  background-image: linear-gradient(
+    $direction,
+    rgb(194, 255, 182) 0%,
+    rgb(255, 163, 182) 40%,
+    rgb(221, 169, 255) 60%,
+    rgb(162, 209, 255) 100%
+  );
+}
+
+@mixin rainbow-gradient($direction) {
+  background-image: linear-gradient(
+    $direction,
+    rgb(221, 2, 3) 0%,
+    rgb(251, 137, 2) 20%,
+    rgb(248, 235, 5) 40%,
+    rgb(0, 127, 38) 60%,
+    rgb(5, 75, 249) 80%,
+    rgb(114, 6, 130) 100%
+  );
+}
+
+.horizontal {
   font-family: sans-serif;
   text-align: center;
   color: black;
 
-  /* cover */
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  @include cover();
 
-  /* first foil */
-  background-size: 300%;
-  background-position: var(--coordinates-x);
-  background-image: linear-gradient(
-    to right,
-    rgb(194, 255, 182),
-    rgb(255, 163, 182),
-    rgb(221, 169, 255),
-    rgb(162, 209, 255)
-  );
+  background-repeat: repeat;
+  background-size: 200%;
+  background-position-x: var(--coordinates-x);
+  @include pastel-gradient(to right);
 }
 
-// .outer:after {
-//   content: "";
-//   opacity: 0.25;
-
-//   /* cover */
-//   position: fixed;
-//   top: 0;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-
-//   /* second foil */
-//   background-size: 200%;
-//   /* background-position: var(--coordinates-y); */
-//   background-position: center;
-//   background-image: linear-gradient(
-//     var(--delta-y),
-//     rgb(221, 2, 3) 0%,
-//     rgb(251, 137, 2) 20%,
-//     rgb(248, 235, 5) 40%,
-//     rgb(0, 127, 38) 60%,
-//     rgb(5, 75, 249) 80%,
-//     rgb(114, 6, 130) 100%
-//   );
-// }
-
 .vertical {
-  content: "";
   opacity: 0.5;
 
-  /* cover */
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  @include cover();
 
-  /* third foil */
+  background-repeat: repeat;
   background-size: 200%;
-  background-position: var(--coordinates-y);
-  background-image: linear-gradient(
-    to right,
-    rgb(251, 165, 116) 0%,
-    rgb(216, 245, 251) 100%
-  );
+  background-position-y: var(--coordinates-y);
+  @include pastel-gradient(to bottom);
+}
+
+.turn {
+  opacity: 0.33;
+
+  @include cover();
+
+  background-repeat: repeat;
+  background-size: 100%;
+  background-position: center;
+  @include rainbow-gradient(var(--delta-y));
 }
 
 /* https://heropatterns.com/ */

@@ -63,59 +63,59 @@ function DeviceOrientation() {
   // create a percentage based on window size for mouse movement
   const xMouse = (coordinates[0] / width) * 100;
   const yMouse = (coordinates[1] / height) * 100;
+  // const
 
   // set a max since we won't look at it upside down
-  const degreesMax = 90;
+  const degreesMaxX = 90;
+  const degreesMaxY = 90;
 
   // around x axis is beta: [-180, 180]
   // around y axis is gamma: [-90, 90]
   // around z axis is alpha: [0, 360]
+
   // remap x to y because of angle around vs angle towards
   const xTiltAngle = deviceOrientation?.gamma;
   const yTiltAngle = deviceOrientation?.beta;
   const zTiltAngle = deviceOrientation?.alpha;
 
   // get percentage
-  const xTiltPercent = (xTiltAngle / degreesMax) * 100;
-  const yTiltPercent = (yTiltAngle / degreesMax) * 100;
-  const zTiltPercent = (zTiltAngle / degreesMax) * 100;
+  const xTiltPercent = (xTiltAngle / degreesMaxX) * 100;
+  const yTiltPercent = (yTiltAngle / degreesMaxY) * 100;
 
   // recenter the angles
   // might not need with deviceOrientation.absolute
   const xTiltOffset = Math.abs(
-    constrainToRange(xTiltPercent + degreesMax / 2, -100, 100)
+    constrainToRange(xTiltPercent + degreesMaxX / 2, -100, 100)
   );
   const yTiltOffset = Math.abs(
-    constrainToRange(yTiltPercent + degreesMax / 2, -100, 100)
-  );
-  const zTiltOffset = Math.abs(
-    constrainToRange(zTiltPercent + degreesMax / 2, -100, 100)
+    constrainToRange(yTiltPercent + degreesMaxY / 2, -100, 100)
   );
 
   // fallback to 0 if there's no data
   const xTilt = xTiltAngle ? xTiltOffset : 0;
   const yTilt = yTiltAngle ? yTiltOffset : 0;
-  const zTilt = zTiltAngle ? zTiltOffset : 0;
+  const zTilt = zTiltAngle ? zTiltAngle : 0;
 
   // offset the tilt by half to make the middle neutral
-  const xValue = xTilt || xMouse;
-  const yValue = yTilt || yMouse;
-  const zValue = zTilt || 0;
+  const xValue = Math.round(xTilt) || xMouse;
+  const yValue = Math.round(yTilt) || yMouse;
+  const zValue = Math.round(zTilt) || 0;
 
   return (
     <section
-      className={styles.outer}
+      className={styles.horizontal}
       style={{
         "--coordinates-x": `${xValue}%`,
         "--coordinates-y": `${yValue}%`,
         "--delta-x": `${(delta[0] / 360) * 100}deg`,
-        "--delta-y": `${(delta[1] / 360) * 100}deg`,
+        "--delta-y": `${zValue || (delta[1] / 360) * 100}deg`,
         // "--delta-x": `${Math.abs(delta[0] / 360) * 100}deg`,
         // "--delta-y": `${Math.abs(delta[1] / 360) * 100}deg`
       }}
       ref={ref}
     >
       <div className={styles.vertical} />
+      <div className={styles.turn} />
 
       <p>
         Current orientation:
