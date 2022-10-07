@@ -2,14 +2,15 @@ import { useEffect, useState, useRef } from "react";
 import useGlobalEvent from "beautiful-react-hooks/useGlobalEvent";
 import useMouseEvents from "beautiful-react-hooks/useMouseEvents";
 import useWindowResize from "beautiful-react-hooks/useWindowResize";
-// import useThrottledCallback from "beautiful-react-hooks/useThrottledCallback";
+import useThrottledCallback from "beautiful-react-hooks/useThrottledCallback";
+
+import { constrainToRange } from "./helpers";
 
 import styles from "./DeviceOrientation.module.scss";
 
 function DeviceOrientation() {
   const [deviceOrientation, setDeviceOrientation] = useState();
   const onDeviceOrientation = useGlobalEvent("deviceorientation");
-  const [isGyroSupported, setIsGyroSupported] = useState(false);
 
   const initialCoordinates = [0, 0];
   const initialDelta = [0, 0];
@@ -20,51 +21,61 @@ function DeviceOrientation() {
 
   const ref = useRef();
   const { onMouseMove } = useMouseEvents(ref);
+  const onWindowResize = useWindowResize();
 
-  useEffect(() => {
-    if (typeof window !== undefined) {
-      const supported = window.DeviceOrientationEvent;
-      if (supported) {
-        setIsGyroSupported(true);
-      }
-    }
-  }, []);
+  onDeviceOrientation(
+    useThrottledCallback(
+      (event) => {
+        setDeviceOrientation(event);
+      },
+      [],
+      100
+    )
+  );
 
-  onDeviceOrientation((event) => {
-    // if (isGyroSupported) {
-    setDeviceOrientation(event);
-    // }
-  });
+  onMouseMove(
+    useThrottledCallback(
+      (event) => {
+        const nextCoords = [event.clientX, event.clientY];
+        const nextDeltas = [event.movementX, event.movementY];
+        setCoordinates(nextCoords);
+        setDelta(nextDeltas);
+        console.log("next", nextCoords);
+      },
+      [],
+      100
+    )
+  );
 
-  onMouseMove((event) => {
-    // if (!isGyroSupported) {
-    const nextCoords = [event.clientX, event.clientY];
-    const nextDeltas = [event.movementX, event.movementY];
-    setCoordinates(nextCoords);
-    setDelta(nextDeltas);
-    // }
-  });
+  onWindowResize(
+    useThrottledCallback((event) => {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    })
+  );
 
-  useWindowResize((event) => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight);
-  });
+  const xMouse = (coordinates[0] / width) * 100;
+  const yMouse = (coordinates[1] / height) * 100;
 
-  const xMouse = coordinates[0] / width;
-  const yMouse = coordinates[1] / height;
+  const degreesMax = 90;
+  // range: [-180, 180]
+  const xGyro = deviceOrientation?.beta
+    ? (deviceOrientation?.beta / degreesMax) * 100
+    : 0;
+  // range: [-90, 90]
+  const yGyro = deviceOrientation?.gamma
+    ? (deviceOrientation?.gamma / degreesMax) * 100
+    : 0;
 
-  const xGyro = deviceOrientation?.beta ? deviceOrientation?.beta / 90 : 0;
-  const yGyro = deviceOrientation?.gamma ? deviceOrientation?.gamma / 90 : 0;
-
-  const xValue = xGyro || xMouse;
-  const yValue = yGyro || yMouse;
+  const xValue = Math.abs(constrainToRange(xGyro, -100, 100)) || xMouse;
+  const yValue = Math.abs(constrainToRange(yGyro, -100, 100)) || yMouse;
 
   return (
     <section
       className={styles.outer}
       style={{
-        "--coordinates-x": `${xValue * 100}%`,
-        "--coordinates-y": `${yValue * 100}%`,
+        "--coordinates-x": `${xValue}%`,
+        "--coordinates-y": `${yValue}%`,
         "--delta-x": `${(delta[0] / 360) * 100}deg`,
         "--delta-y": `${(delta[1] / 360) * 100}deg`,
         // "--delta-x": `${Math.abs(delta[0] / 360) * 100}deg`,
@@ -92,10 +103,14 @@ function DeviceOrientation() {
         <code>
           x {coordinates[0]} / y {coordinates[1]}
         </code>
+      </p>
+
+      <p>
+        Output:
         <br />
-        <code>
-          xValue {xValue} / yValue {yValue}
-        </code>
+        <code>xValue {xValue}%</code>
+        <br />
+        <code>yValue {yValue}%</code>
       </p>
     </section>
   );
