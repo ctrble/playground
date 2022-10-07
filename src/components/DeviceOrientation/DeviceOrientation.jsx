@@ -69,13 +69,16 @@ function DeviceOrientation() {
 
   // around x axis is beta: [-180, 180]
   // around y axis is gamma: [-90, 90]
+  // around z axis is alpha: [0, 360]
   // remap x to y because of angle around vs angle towards
   const xTiltAngle = deviceOrientation?.gamma;
   const yTiltAngle = deviceOrientation?.beta;
+  const zTiltAngle = deviceOrientation?.alpha;
 
   // get percentage
   const xTiltPercent = (xTiltAngle / degreesMax) * 100;
   const yTiltPercent = (yTiltAngle / degreesMax) * 100;
+  const zTiltPercent = (zTiltAngle / degreesMax) * 100;
 
   // recenter the angles
   // might not need with deviceOrientation.absolute
@@ -85,14 +88,19 @@ function DeviceOrientation() {
   const yTiltOffset = Math.abs(
     constrainToRange(yTiltPercent + degreesMax / 2, -100, 100)
   );
+  const zTiltOffset = Math.abs(
+    constrainToRange(zTiltPercent + degreesMax / 2, -100, 100)
+  );
 
   // fallback to 0 if there's no data
   const xTilt = xTiltAngle ? xTiltOffset : 0;
   const yTilt = yTiltAngle ? yTiltOffset : 0;
+  const zTilt = zTiltAngle ? zTiltOffset : 0;
 
   // offset the tilt by half to make the middle neutral
   const xValue = xTilt || xMouse;
   const yValue = yTilt || yMouse;
+  const zValue = zTilt || 0;
 
   return (
     <section
@@ -112,13 +120,17 @@ function DeviceOrientation() {
       <p>
         Current orientation:
         <br />
-        <code>{deviceOrientation?.rotationRate?.alpha}</code>
-        <code>
-          {deviceOrientation?.rotationRate?.beta} / {xTilt}
-        </code>
-        <code>
-          {deviceOrientation?.rotationRate?.gamma} / {yTilt}
-        </code>
+        <code>alpha raw {deviceOrientation?.alpha}</code>
+        <br />
+        <code>z tilt {zTilt}</code>
+        <hr />
+        <code>beta raw {deviceOrientation?.beta}</code>
+        <br />
+        <code>x tilt {xTilt}</code>
+        <hr />
+        <code>gamma raw {deviceOrientation?.gamma}</code>
+        <br />
+        <code>y tilt {yTilt}</code>
       </p>
 
       <p>
@@ -135,6 +147,8 @@ function DeviceOrientation() {
         <code>xValue {xValue}%</code>
         <br />
         <code>yValue {yValue}%</code>
+        <br />
+        <code>zValue {zValue}%</code>
       </p>
     </section>
   );
