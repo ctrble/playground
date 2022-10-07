@@ -60,7 +60,7 @@
   background-repeat: repeat;
   background-size: 100%;
   background-position: center;
-  @include rainbow-gradient(var(--delta-y));
+  @include rainbow-gradient(var(--delta-z));
 }
 
 /* https://heropatterns.com/ */

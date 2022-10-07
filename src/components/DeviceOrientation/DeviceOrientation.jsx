@@ -63,11 +63,11 @@ function DeviceOrientation() {
   // create a percentage based on window size for mouse movement
   const xMouse = (coordinates[0] / width) * 100;
   const yMouse = (coordinates[1] / height) * 100;
-  // const
+  const deltaMouse = ((delta[0] + delta[1]) / 360) * 100;
 
   // set a max since we won't look at it upside down
-  const degreesMaxX = 90;
-  const degreesMaxY = 90;
+  const xDegreesMax = 90;
+  const yDegreesMax = 90;
 
   // around x axis is beta: [-180, 180]
   // around y axis is gamma: [-90, 90]
@@ -79,16 +79,16 @@ function DeviceOrientation() {
   const zTiltAngle = deviceOrientation?.alpha;
 
   // get percentage
-  const xTiltPercent = (xTiltAngle / degreesMaxX) * 100;
-  const yTiltPercent = (yTiltAngle / degreesMaxY) * 100;
+  const xTiltPercent = (xTiltAngle / xDegreesMax) * 100;
+  const yTiltPercent = (yTiltAngle / yDegreesMax) * 100;
 
   // recenter the angles
   // might not need with deviceOrientation.absolute
   const xTiltOffset = Math.abs(
-    constrainToRange(xTiltPercent + degreesMaxX / 2, -100, 100)
+    constrainToRange(xTiltPercent + xDegreesMax / 2, -100, 100)
   );
   const yTiltOffset = Math.abs(
-    constrainToRange(yTiltPercent + degreesMaxY / 2, -100, 100)
+    constrainToRange(yTiltPercent + yDegreesMax / 2, -100, 100)
   );
 
   // fallback to 0 if there's no data
@@ -99,7 +99,7 @@ function DeviceOrientation() {
   // offset the tilt by half to make the middle neutral
   const xValue = Math.round(xTilt) || xMouse;
   const yValue = Math.round(yTilt) || yMouse;
-  const zValue = Math.round(zTilt) || 0;
+  const zValue = Math.round(zTilt) || deltaMouse;
 
   return (
     <section
@@ -107,10 +107,7 @@ function DeviceOrientation() {
       style={{
         "--coordinates-x": `${xValue}%`,
         "--coordinates-y": `${yValue}%`,
-        "--delta-x": `${(delta[0] / 360) * 100}deg`,
-        "--delta-y": `${zValue || (delta[1] / 360) * 100}deg`,
-        // "--delta-x": `${Math.abs(delta[0] / 360) * 100}deg`,
-        // "--delta-y": `${Math.abs(delta[1] / 360) * 100}deg`
+        "--delta-z": `${zValue}deg`,
       }}
       ref={ref}
     >
