@@ -111,12 +111,13 @@ function DeviceOrientation() {
       }}
       ref={ref}
     >
-      <div className={styles.horizontal} />
-      <div className={styles.vertical} />
-      <div className={styles.turn} />
-      <div className={styles.glare} />
+      <div className={styles.mask}>
+        <div className={styles.horizontal} />
+        <div className={styles.vertical} />
+        <div className={styles.turn} />
+        <div className={styles.glare} />
 
-      {/* <p>
+        {/* <p>
         Current orientation:
         <br />
         <code>alpha raw {deviceOrientation?.alpha}</code>
@@ -149,6 +150,7 @@ function DeviceOrientation() {
         <br />
         <code>zValue {zValue}%</code>
       </p> */}
+      </div>
     </section>
   );
 }
