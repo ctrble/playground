@@ -103,7 +103,7 @@ function DeviceOrientation() {
 
   return (
     <section
-      className={styles.horizontal}
+      className={styles.wrapper}
       style={{
         "--coordinates-x": `${xValue}%`,
         "--coordinates-y": `${yValue}%`,
@@ -111,8 +111,10 @@ function DeviceOrientation() {
       }}
       ref={ref}
     >
+      <div className={styles.horizontal} />
       <div className={styles.vertical} />
       <div className={styles.turn} />
+      <div className={styles.glare} />
 
       {/* <p>
         Current orientation:
