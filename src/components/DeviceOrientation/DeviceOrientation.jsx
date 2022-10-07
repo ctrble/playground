@@ -29,7 +29,7 @@ function DeviceOrientation() {
         setDeviceOrientation(event);
       },
       [],
-      100
+      25
     )
   );
 
@@ -43,7 +43,7 @@ function DeviceOrientation() {
         console.log("next", nextCoords);
       },
       [],
-      100
+      25
     )
   );
 
@@ -59,12 +59,12 @@ function DeviceOrientation() {
 
   const degreesMax = 90;
   // range: [-180, 180]
-  const xGyro = deviceOrientation?.beta
-    ? (deviceOrientation?.beta / degreesMax) * 100
+  const xGyro = deviceOrientation?.gamma
+    ? (deviceOrientation?.gamma / degreesMax) * 100
     : 0;
   // range: [-90, 90]
-  const yGyro = deviceOrientation?.gamma
-    ? (deviceOrientation?.gamma / degreesMax) * 100
+  const yGyro = deviceOrientation?.beta
+    ? (deviceOrientation?.beta / degreesMax) * 100
     : 0;
 
   const xValue = Math.abs(constrainToRange(xGyro, -100, 100)) || xMouse;
@@ -83,7 +83,7 @@ function DeviceOrientation() {
       }}
       ref={ref}
     >
-      <div className={styles.inner} />
+      <div className={styles.vertical} />
 
       <p>
         Current orientation:
