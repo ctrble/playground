@@ -67,8 +67,11 @@ function DeviceOrientation() {
     ? (deviceOrientation?.beta / degreesMax) * 100
     : 0;
 
-  const xValue = Math.abs(constrainToRange(xGyro, -100, 100)) || xMouse;
-  const yValue = Math.abs(constrainToRange(yGyro, -100, 100)) || yMouse;
+  // offset the tilt by half to make the middle neutral
+  const xValue =
+    Math.abs(constrainToRange(xGyro + degreesMax / 2, -100, 100)) || xMouse;
+  const yValue =
+    Math.abs(constrainToRange(yGyro + degreesMax / 2, -100, 100)) || yMouse;
 
   return (
     <section
