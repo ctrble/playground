@@ -8,7 +8,7 @@ import { constrainToRange } from "./helpers";
 
 import styles from "./DeviceOrientation.module.scss";
 
-function DeviceOrientation() {
+function DeviceOrientation({ children }) {
   const initialOrientation = {
     alpha: 0,
     beta: 0,
@@ -112,44 +112,11 @@ function DeviceOrientation() {
       ref={ref}
     >
       <div className={styles.mask}>
+        {children}
         <div className={styles.horizontal} />
         <div className={styles.vertical} />
         <div className={styles.turn} />
         <div className={styles.glare} />
-
-        {/* <p>
-        Current orientation:
-        <br />
-        <code>alpha raw {deviceOrientation?.alpha}</code>
-        <br />
-        <code>z tilt {zTilt}</code>
-        <hr />
-        <code>beta raw {deviceOrientation?.beta}</code>
-        <br />
-        <code>x tilt {xTilt}</code>
-        <hr />
-        <code>gamma raw {deviceOrientation?.gamma}</code>
-        <br />
-        <code>y tilt {yTilt}</code>
-      </p>
-
-      <p>
-        Coordinates:
-        <br />
-        <code>
-          x {coordinates[0]} / y {coordinates[1]}
-        </code>
-      </p>
-
-      <p>
-        Output:
-        <br />
-        <code>xValue {xValue}%</code>
-        <br />
-        <code>yValue {yValue}%</code>
-        <br />
-        <code>zValue {zValue}%</code>
-      </p> */}
       </div>
     </section>
   );

@@ -14,7 +14,9 @@ import Tilter from "src/components/Tilter";
 export default function Home() {
   return (
     <Tilter>
-      <DeviceOrientation />
+      <DeviceOrientation>
+        <p>hello</p>
+      </DeviceOrientation>
     </Tilter>
   );
 }

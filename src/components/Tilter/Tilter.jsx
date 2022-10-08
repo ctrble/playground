@@ -21,18 +21,20 @@ function Tilter({ children }) {
 
   const isReady = (requiresPermission && granted) || !requiresPermission;
 
+  if (isReady) {
+    return children;
+  }
+
   return (
     <>
       {requiresPermission && (
         <button type="button" onClick={handleClick}>
-          Request
+          Request Permission
         </button>
       )}
 
       <p>Requires is {requiresPermission.toString()}</p>
       <p>Permission is {granted.toString()}</p>
-
-      {isReady ? children : null}
     </>
   );
 }
