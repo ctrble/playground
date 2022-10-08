@@ -10,26 +10,30 @@ $mask-image: url("data:image/svg+xml,%3Csvg width='48' height='32' viewBox='0 0 
   right: 0;
 }
 
+// prettier-ignore
+$gradient-pastel:
+  rgba(194, 255, 182, 1) 0%,
+  rgba(255, 163, 182, 1) 40%,
+  rgba(221, 169, 255, 1) 60%,
+  rgba(162, 209, 255, 1) 100%;
+// prettier-enable
+
+// prettier-ignore
+$gradient-rainbow:
+  rgba(221, 2, 3, 0.5) 0%,
+  rgba(251, 137, 2, 0.5) 20%,
+  rgba(248, 235, 5, 0.5) 40%,
+  rgba(0, 127, 38, 0.5) 60%,
+  rgba(5, 75, 249, 0.5) 80%,
+  rgba(114, 6, 130, 0.5) 100%;
+// prettier-enable
+
 @mixin pastel-gradient($direction) {
-  background-image: linear-gradient(
-    $direction,
-    rgb(194, 255, 182) 0%,
-    rgb(255, 163, 182) 40%,
-    rgb(221, 169, 255) 60%,
-    rgb(162, 209, 255) 100%
-  );
+  background-image: repeating-linear-gradient($direction, $gradient-pastel);
 }
 
 @mixin rainbow-gradient($direction) {
-  background-image: linear-gradient(
-    $direction,
-    rgb(221, 2, 3) 0%,
-    rgb(251, 137, 2) 20%,
-    rgb(248, 235, 5) 40%,
-    rgb(0, 127, 38) 60%,
-    rgb(5, 75, 249) 80%,
-    rgb(114, 6, 130) 100%
-  );
+  background-image: linear-gradient($direction, $gradient-rainbow);
 }
 
 .wrapper {
@@ -61,9 +65,9 @@ $mask-image: url("data:image/svg+xml,%3Csvg width='48' height='32' viewBox='0 0 
   @include cover();
 
   background-repeat: repeat;
-  background-size: 200%;
+  background-size: 200% 200%;
   background-position-y: var(--coordinates-y);
-  @include pastel-gradient(to bottom);
+  @include pastel-gradient(to top);
 }
 
 .turn {

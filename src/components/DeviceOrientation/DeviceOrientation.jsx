@@ -1,8 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import useGlobalEvent from "beautiful-react-hooks/useGlobalEvent";
 import useMouseEvents from "beautiful-react-hooks/useMouseEvents";
 import useWindowResize from "beautiful-react-hooks/useWindowResize";
 import useThrottledCallback from "beautiful-react-hooks/useThrottledCallback";
+import classNames from "classnames";
 
 import { constrainToRange } from "./helpers";
 
@@ -116,7 +117,7 @@ function DeviceOrientation({ children }) {
         <div className={styles.horizontal} />
         <div className={styles.vertical} />
         <div className={styles.turn} />
-        <div className={styles.glare} />
+        {/* <div className={styles.glare} /> */}
       </div>
     </section>
   );
