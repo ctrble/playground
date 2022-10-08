@@ -107,12 +107,12 @@ function DeviceOrientation({ children }) {
       style={{
         "--coordinates-x": `${xValue}%`,
         "--coordinates-y": `${yValue}%`,
-        "--delta-z": `${zValue}deg`,
+        "--degrees-z": `${zValue}deg`,
       }}
       ref={ref}
     >
+      {children}
       <div className={styles.mask}>
-        {children}
         <div className={styles.horizontal} />
         <div className={styles.vertical} />
         <div className={styles.turn} />
