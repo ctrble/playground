@@ -1,6 +1,7 @@
 import React from "react";
 import useSWR from "swr";
 import Image from "next/Image";
+import * as AspectRatio from "@radix-ui/react-aspect-ratio";
 
 import styles from "./Card.module.scss";
 
@@ -29,7 +30,8 @@ function Card() {
   // };
 
   return (
-    <>
+    <AspectRatio.Root className={styles.card} ratio={2.5 / 3.5}>
+      {/* <div className={styles.card__contents}> */}
       <h1>{name}</h1>
       <h2>base stats</h2>
       <ul>
@@ -51,7 +53,8 @@ function Card() {
           unoptimized={true}
         />
       </div>
-    </>
+      {/* </div> */}
+    </AspectRatio.Root>
   );
 }
 

@@ -2,6 +2,7 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import Card from "src/components/Card";
+import Layout from "src/components/Layout";
 
 const DeviceOrientation = dynamic(
   () => import("src/components/DeviceOrientation"),
@@ -18,7 +19,9 @@ export default function Home() {
     <>
       <Tilter>
         <DeviceOrientation>
-          <Card />
+          <Layout>
+            <Card />
+          </Layout>
         </DeviceOrientation>
       </Tilter>
     </>

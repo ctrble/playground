@@ -47,7 +47,6 @@ function DeviceOrientation({ children }) {
         const nextDeltas = [event.movementX, event.movementY];
         setCoordinates(nextCoords);
         setDelta(nextDeltas);
-        console.log("next", nextCoords);
       },
       [],
       25
@@ -102,13 +101,26 @@ function DeviceOrientation({ children }) {
   const yValue = Math.round(yTilt) || yMouse;
   const zValue = Math.round(zTilt) || deltaMouse;
 
+  // TODO: this is messy please clean
+  // height/width, not width/height
+  const cardRatio = 3.5 / 2.5;
+  const scaledWidth =
+    width * cardRatio > height
+      ? Math.min(width, Math.ceil(height / cardRatio))
+      : width;
+  const scaledHeight = Math.floor(scaledWidth * cardRatio);
+
   return (
-    <section
+    <div
       className={styles.wrapper}
       style={{
         "--coordinates-x": `${xValue}%`,
         "--coordinates-y": `${yValue}%`,
         "--degrees-z": `${zValue}deg`,
+        "--window-x": `${width}px`,
+        "--window-y": `${height}px`,
+        "--card-x": `${scaledWidth}px`,
+        "--card-y": `${scaledHeight}px`,
       }}
       ref={ref}
     >
@@ -124,7 +136,7 @@ function DeviceOrientation({ children }) {
         <div className={styles.vertical} />
         <div className={styles.turn} /> */}
       {/* <div className={styles.glare} /> */}
-    </section>
+    </div>
   );
 }
 

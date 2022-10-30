@@ -1,0 +1,19 @@
+.layout {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  // gap: 1rem;
+  // padding: 1rem;
+  // height: 100vh;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.layout__child {
+  position: relative;
+
+  // from DeviceOrientation
+  width: var(--card-x);
+  height: var(--card-h);
+}

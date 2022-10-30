@@ -45,6 +45,7 @@ $gradient-rainbow:
   color: black;
   @include cover();
   background-color: #ffffff;
+  height: 100%;
 }
 
 .mask {

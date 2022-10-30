@@ -1,6 +1,16 @@
+.card {
+  border: 1px solid pink;
+  // height: 80vh;
+}
+
+.card__contents {
+  display: grid;
+  // height: 100%;
+}
+
 .card__image {
   position: relative;
-  height: 50vh;
+  height: 40vh;
   * {
     object-fit: contain;
   }
