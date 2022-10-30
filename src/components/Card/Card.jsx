@@ -31,29 +31,29 @@ function Card() {
 
   return (
     <AspectRatio.Root className={styles.card} ratio={2.5 / 3.5}>
-      {/* <div className={styles.card__contents}> */}
-      <h1>{name}</h1>
-      <h2>base stats</h2>
-      <ul>
-        {stats.map((element) => {
-          const name = element.stat?.name || "unknown";
-          const base = element.base_stat || "?";
-          return (
-            <li key={`${name}-${base}`}>
-              {name} : {base}
-            </li>
-          );
-        })}
-      </ul>
-      <div className={styles.card__image}>
-        <Image
-          alt="test"
-          layout="fill"
-          src={sprites.other["official-artwork"].front_default}
-          unoptimized={true}
-        />
+      <div className={styles.card__contents}>
+        <h1>{name}</h1>
+        <h2>base stats</h2>
+        <ul>
+          {stats.map((element) => {
+            const name = element.stat?.name || "unknown";
+            const base = element.base_stat || "?";
+            return (
+              <li key={`${name}-${base}`}>
+                {name} : {base}
+              </li>
+            );
+          })}
+        </ul>
+        <div className={styles.card__image}>
+          <Image
+            alt="test"
+            layout="fill"
+            src={sprites.other["official-artwork"].front_default}
+            unoptimized={true}
+          />
+        </div>
       </div>
-      {/* </div> */}
     </AspectRatio.Root>
   );
 }

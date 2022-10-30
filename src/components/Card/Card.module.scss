@@ -1,11 +1,12 @@
 .card {
-  border: 1px solid pink;
-  // height: 80vh;
+  background-color: gold;
+  padding: 1rem;
 }
 
 .card__contents {
   display: grid;
-  // height: 100%;
+  background-color: white;
+  height: 100%;
 }
 
 .card__image {
