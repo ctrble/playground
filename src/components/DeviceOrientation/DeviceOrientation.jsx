@@ -112,17 +112,18 @@ function DeviceOrientation({ children }) {
       }}
       ref={ref}
     >
-      <div className={styles.mask}>
+      {children}
+      {/* <div className={styles.mask}>
         <div className={styles.horizontal}>
           <div className={styles.vertical}>
             <div className={styles.turn}>{children}</div>
           </div>
         </div>
-        {/* <div className={styles.horizontal} />
+      </div> */}
+      {/* <div className={styles.horizontal} />
         <div className={styles.vertical} />
         <div className={styles.turn} /> */}
-        {/* <div className={styles.glare} /> */}
-      </div>
+      {/* <div className={styles.glare} /> */}
     </section>
   );
 }

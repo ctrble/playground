@@ -1,0 +1,7 @@
+.card__image {
+  position: relative;
+  height: 50vh;
+  * {
+    object-fit: contain;
+  }
+}
