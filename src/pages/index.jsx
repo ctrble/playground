@@ -1,6 +1,8 @@
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
+import Card from "src/components/Card";
+
 const DeviceOrientation = dynamic(
   () => import("src/components/DeviceOrientation"),
   {
@@ -13,10 +15,12 @@ import Tilter from "src/components/Tilter";
 
 export default function Home() {
   return (
-    <Tilter>
-      <DeviceOrientation>
-        <p>hello</p>
-      </DeviceOrientation>
-    </Tilter>
+    <>
+      <Tilter>
+        <DeviceOrientation>
+          <Card />
+        </DeviceOrientation>
+      </Tilter>
+    </>
   );
 }
