@@ -2,7 +2,10 @@ import React from "react";
 import useSWR from "swr";
 import Image from "next/Image";
 import * as AspectRatio from "@radix-ui/react-aspect-ratio";
+import classNames from "classnames";
 
+// TODO: this is so bad and messy
+import stylesOrientation from "src/components/DeviceOrientation/DeviceOrientation.module.scss";
 import styles from "./Card.module.scss";
 
 function Card() {
@@ -30,7 +33,10 @@ function Card() {
   // };
 
   return (
-    <AspectRatio.Root className={styles.card} ratio={2.5 / 3.5}>
+    <AspectRatio.Root
+      className={classNames(styles.card, stylesOrientation.horizontal)}
+      ratio={2.5 / 3.5}
+    >
       <div className={styles.card__contents}>
         <h1>{name}</h1>
         <h2>base stats</h2>
